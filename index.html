@@ -21,6 +21,10 @@
             color: #EEE;
         }
 
+        h1 {
+            text-align: center;
+        }
+
         label {
             width: 10em;
             display: inline-block;
@@ -39,7 +43,7 @@
             border-bottom: 1px #EEE solid;
             color: #FF6D6D;
             font-weight: bold;
-            margin-bottom: 0.5em;
+            margin-bottom: 0.8em;
             width: 5em;
         }
 
@@ -59,21 +63,22 @@
             text-align: left;
         }
 
-        th {
-            padding: 4px;
+        th,
+        td {
+            padding: 0 16px 8px 0;
         }
 
         #app {
             display: flex;
             flex-wrap: wrap;
+            justify-content: space-evenly;
         }
 
         .inputSet {
             padding: 8px;
-            min-width: 18em;
         }
     </style>
-    <h1>Genshin Impact Damage Calculator</h1>
+    <h1>Yet another Genshin Impact Damage Calculator</h1>
     <div id="app">
         <div class="inputSet">
             <h3>Base stats <a href="https://genshin-impact.fandom.com/wiki/Attributes#Base_Stats">❓</a></h3>
@@ -90,23 +95,23 @@
                 <input id="baseDEF" v-model.number="baseDEF" type="number" onchange="onInputChange()">
             </div>
             <div>
-                <label for="baseHPP">Base HP (%)</label>
+                <label for="baseHPP">Base HP%</label>
                 <input id="baseHPP" v-model.number="baseHPP" type="number" step=".1" onchange="onInputChange()">
             </div>
             <div>
-                <label for="baseATKP">Base ATK (%)</label>
+                <label for="baseATKP">Base ATK%</label>
                 <input id="baseATKP" v-model.number="baseATKP" type="number" step=".1" onchange="onInputChange()">
             </div>
             <div>
-                <label for="baseDEFP">Base DEF (%)</label>
+                <label for="baseDEFP">Base DEF%</label>
                 <input id="baseDEFP" v-model.number="baseDEFP" type="number" step=".1" onchange="onInputChange()">
             </div>
             <div>
-                <label for="baseCRITP">Base Crit(%)</label>
+                <label for="baseCRITP">Base Crit%</label>
                 <input id="baseCRITP" v-model.number="baseCRITP" type="number" step=".1" onchange="onInputChange()">
             </div>
             <div>
-                <label for="baseCDMGP">Base Crit DMG(%)</label>
+                <label for="baseCDMGP">Base Crit DMG%</label>
                 <input id="baseCDMGP" v-model.number="baseCDMGP" type="number" step=".1" onchange="onInputChange()">
             </div>
         </div>
@@ -118,7 +123,7 @@
                 <input id="wepATK" v-model.number="wepATK" type="number" onchange="onInputChange()">
             </div>
             <div>
-                <label for="wepHPP">Weapon HP (%)</label>
+                <label for="wepHPP">Weapon HP%</label>
                 <input id="wepHPP" v-model.number="wepHPP" type="number" step=".1" onchange="onInputChange()">
             </div>
             <div>
@@ -150,7 +155,7 @@
                 <input id="artHP" v-model.number="artHP" type="number" onchange="onInputChange()">
             </div>
             <div>
-                <label for="artHPP">Artifact HP (%)</label>
+                <label for="artHPP">Artifact HP%</label>
                 <input id="artHPP" v-model.number="artHPP" type="number" onchange="onInputChange()">
             </div>
             <div>
@@ -244,7 +249,6 @@
         let timeBetweenSaves = 500
         const onInputChange = () => {
             if (lastSaveMoment + timeBetweenSaves > new Date().getTime()) {
-                console.log("not enough time has passed")
                 return
             }
             let state = JSON.stringify(vueApp.$data)
