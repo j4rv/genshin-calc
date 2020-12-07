@@ -19,17 +19,37 @@
     <div id="app">
         <div>
             <h3>Base stats <a href="https://genshin-impact.fandom.com/wiki/Attributes#Base_Stats">❓</a></h3>
-            <!--<div>
+            <div>
                 <label for="baseHP">Base HP</label>
-                <input id="baseHP" v-model.number="baseHP" type="number">
-            </div>-->
+                <input id="baseHP" v-model.number="baseHP" type="number" onchange="onInputChange()">
+            </div>
             <div>
                 <label for="baseATK">Base ATK</label>
-                <input id="baseATK" v-model.number="baseATK" type="number">
+                <input id="baseATK" v-model.number="baseATK" type="number" onchange="onInputChange()">
             </div>
             <div>
                 <label for="baseDEF">Base DEF</label>
-                <input id="baseDEF" v-model.number="baseDEF" type="number">
+                <input id="baseDEF" v-model.number="baseDEF" type="number" onchange="onInputChange()">
+            </div>
+            <div>
+                <label for="baseHPP">Base HP (%)</label>
+                <input id="baseHPP" v-model.number="baseHPP" type="number" step=".1" onchange="onInputChange()">
+            </div>
+            <div>
+                <label for="baseATKP">Base ATK (%)</label>
+                <input id="baseATKP" v-model.number="baseATKP" type="number" step=".1" onchange="onInputChange()">
+            </div>
+            <div>
+                <label for="baseDEFP">Base DEF (%)</label>
+                <input id="baseDEFP" v-model.number="baseDEFP" type="number" step=".1" onchange="onInputChange()">
+            </div>
+            <div>
+                <label for="baseCRITP">Base Crit(%)</label>
+                <input id="baseCRITP" v-model.number="baseCRITP" type="number" step=".1" onchange="onInputChange()">
+            </div>
+            <div>
+                <label for="baseCDMGP">Base Crit DMG(%)</label>
+                <input id="baseCDMGP" v-model.number="baseCDMGP" type="number" step=".1" onchange="onInputChange()">
             </div>
         </div>
 
@@ -39,27 +59,31 @@
             <h3>Weapon stats <a href="https://genshin-impact.fandom.com/wiki/Weapons">❓</a></h3>
             <div>
                 <label for="wepATK">Weapon ATK</label>
-                <input id="wepATK" v-model.number="wepATK" type="number">
+                <input id="wepATK" v-model.number="wepATK" type="number" onchange="onInputChange()">
+            </div>
+            <div>
+                <label for="wepHPP">Weapon HP (%)</label>
+                <input id="wepHPP" v-model.number="wepHPP" type="number" step=".1" onchange="onInputChange()">
             </div>
             <div>
                 <label for="wepATKP">Weapon ATK%</label>
-                <input id="wepATKP" v-model.number="wepATKP" type="number">
+                <input id="wepATKP" v-model.number="wepATKP" type="number" step=".1" onchange="onInputChange()">
             </div>
             <div>
                 <label for="wepDEFP">Weapon DEF%</label>
-                <input id="wepDEFP" v-model.number="wepDEFP" type="number">
+                <input id="wepDEFP" v-model.number="wepDEFP" type="number" step=".1" onchange="onInputChange()">
             </div>
             <div>
                 <label for="wepCRITP">Weapon Crit%</label>
-                <input id="wepCRITP" v-model.number="wepCRITP" type="number">
+                <input id="wepCRITP" v-model.number="wepCRITP" type="number" step=".1" onchange="onInputChange()">
             </div>
             <div>
                 <label for="wepCDMGP">Weapon Crit DMG%</label>
-                <input id="wepCDMGP" v-model.number="wepCDMGP" type="number">
+                <input id="wepCDMGP" v-model.number="wepCDMGP" type="number" step=".1" onchange="onInputChange()">
             </div>
             <div>
                 <label for="wepPassMult">Passive Multiplier</label>
-                <input id="wepPassMult" v-model.number="wepPassMult" type="number">
+                <input id="wepPassMult" v-model.number="wepPassMult" type="number" step=".1" onchange="onInputChange()">
             </div>
         </div>
 
@@ -68,42 +92,59 @@
         <div>
             <h3>Artifact stats <a href="https://genshin-impact.fandom.com/wiki/Artifacts">❓</a></h3>
             <div>
+                <label for="artHP">Artifact HP</label>
+                <input id="artHP" v-model.number="artHP" type="number" onchange="onInputChange()">
+            </div>
+            <div>
+                <label for="artHPP">Artifact HP (%)</label>
+                <input id="artHPP" v-model.number="artHPP" type="number" onchange="onInputChange()">
+            </div>
+            <div>
                 <label for="artATK">Artifact ATK</label>
-                <input id="artATK" v-model.number="artATK" type="number">
+                <input id="artATK" v-model.number="artATK" type="number" onchange="onInputChange()">
             </div>
             <div>
                 <label for="artATKP">Artifact ATK%</label>
-                <input id="artATKP" v-model.number="artATKP" type="number">
+                <input id="artATKP" v-model.number="artATKP" type="number" step=".1" onchange="onInputChange()">
             </div>
             <div>
                 <label for="artDEF">Artifact DEF</label>
-                <input id="artDEF" v-model.number="artDEF" type="number">
+                <input id="artDEF" v-model.number="artDEF" type="number" onchange="onInputChange()">
             </div>
             <div>
                 <label for="artDEFP">Artifact DEF%</label>
-                <input id="artDEFP" v-model.number="artDEFP" type="number">
-            </div>
-            <div>
-                <label for="artDmgMult">Damage Multiplier</label>
-                <input id="artDmgMult" v-model.number="artDmgMult" type="number">
+                <input id="artDEFP" v-model.number="artDEFP" type="number" step=".1" onchange="onInputChange()">
             </div>
             <div>
                 <label for="artCRITP">Artifact Crit%</label>
-                <input id="artCRITP" v-model.number="artCRITP" type="number">
+                <input id="artCRITP" v-model.number="artCRITP" type="number" step=".1" onchange="onInputChange()">
             </div>
             <div>
                 <label for="artCDMGP">Artifact Crit DMG%</label>
-                <input id="artCDMGP" v-model.number="artCDMGP" type="number">
+                <input id="artCDMGP" v-model.number="artCDMGP" type="number" step=".1" onchange="onInputChange()">
+            </div>
+            <div>
+                <label for="artDmgMult">Damage Multiplier</label>
+                <input id="artDmgMult" v-model.number="artDmgMult" type="number" step=".1" onchange="onInputChange()">
             </div>
         </div>
 
         <br><!-- temp! -->
 
         <div>
-            <h3>Extra multipliers</h3>
+            <h3>Others</h3>
+            <div>
+                <label for="motionVal">Motion value (%)</label>
+                <input id="motionVal" v-model.number="motionVal" type="number" step=".1" onchange="onInputChange()">
+            </div>
             <div>
                 <label for="defToAtkConv">DEF to ATK conversion (%) (Noelle's Q)</label>
-                <input id="defToAtkConv" v-model.number="defToAtkConv" type="number">
+                <input id="defToAtkConv" v-model.number="defToAtkConv" type="number" step=".1"
+                    onchange="onInputChange()">
+            </div>
+            <div>
+                <label for="hpToDmgConv">HP to DMG conversion (%) (Zhongli's Q)</label>
+                <input id="hpToDmgConv" v-model.number="hpToDmgConv" type="number" step=".1" onchange="onInputChange()">
             </div>
             <!-- TODO: HP -> dmg scaling (Zhongli) -->
         </div>
@@ -112,17 +153,17 @@
 
         <div>
             <h3>Final stats</h3>
-            <!--<div>
+            <div>
                 <label for="finalHP">Final HP:</label>
-                <span id="finalHP">{{ finalHP }}</span>
-            </div>-->
+                <span id="finalHP">{{ Math.trunc(finalHP) }}</span>
+            </div>
             <div>
                 <label for="finalATK">Final ATK:</label>
-                <span id="finalATK">{{ finalATK }}</span>
+                <span id="finalATK">{{ Math.trunc(finalATK) }}</span>
             </div>
             <div>
                 <label for="finalDEF">Final DEF:</label>
-                <span id="finalDEF">{{ finalDEF }}</span>
+                <span id="finalDEF">{{ Math.trunc(finalDEF) }}</span>
             </div>
             <div>
                 <label for="finalCritP">Final Crit%:</label>
@@ -134,33 +175,60 @@
             </div>
             <div>
                 <label for="finalAvgDMG">Final non-crit DMG (Motion Value of 1):</label>
-                <span id="finalAvgDMG">{{ finalDMG }}</span>
+                <span id="finalAvgDMG">{{ Math.trunc(finalDMG) }}</span>
             </div>
             <div>
                 <label for="finalAvgDMG">Final crit DMG (Motion Value of 1):</label>
-                <span id="finalAvgDMG">{{ finalDMG * ( 1 + finalCritDMG / 100) }}</span>
+                <span id="finalAvgDMG">{{ Math.trunc(finalDMG * ( 1 + finalCritDMG / 100)) }}</span>
             </div>
             <div>
                 <label for="finalAvgDMG">Final average DMG (Motion Value of 1):</label>
-                <span id="finalAvgDMG">{{ finalDMG * finalCritAvgM }}</span>
+                <span id="finalAvgDMG">{{ Math.trunc(finalDMG * finalCritAvgM) }}</span>
             </div>
         </div>
     </div>
 
     <script>
+        let lastSaveMoment = 0
+        let timeBetweenSaves = 500
+        const onInputChange = () => {
+            if (lastSaveMoment + timeBetweenSaves > new Date().getTime()) {
+                console.log("not enough time has passed")
+                return
+            }
+            let state = JSON.stringify(vueApp.$data)
+            localStorage.setItem("state", state)
+            lastSaveMoment = new Date().getTime()
+        }
+
+        const loadState = (jsonState) => {
+            let state = JSON.parse(jsonState)
+            for (key in state) {
+                vueApp[key] = state[key]
+            }
+        }
+
         const app = {
             data: () => ({
-                baseHP: 7000,
-                baseATK: 200,
-                baseDEF: 600,
+                baseHP: 12071,
+                baseATK: 191,
+                baseDEF: 799,
+                baseHPP: 0,
+                baseATKP: 0,
+                baseDEFP: 30,
+                baseCRITP: 0,
+                baseCDMGP: 0,
 
-                wepATK: 0,
-                wepATKP: 0,
-                wepDEFP: 0,
+                wepATK: 510,
+                wepHPP: 0,
+                wepATKP: 48,
+                wepDEFP: 51.7 + 48,
                 wepCRITP: 0,
                 wepCDMGP: 0,
                 wepPassMult: 0,
 
+                artHP: 0,
+                artHPP: 0,
                 artATK: 0,
                 artATKP: 0,
                 artDEF: 0,
@@ -169,30 +237,30 @@
                 artCRITP: 0,
                 artCDMGP: 0,
 
-                defToAtkConv: 0,
+                motionVal: 125,
+                defToAtkConv: 72,
+                hpToDmgConv: 0,
             }),
             computed: {
-                finalHP: function () { return this.baseHP },
+                finalHP: function () { return this.baseHP * (1 + (this.baseHPP + this.wepHPP + this.artHPP) / 100) + this.artHP },
 
-                finalDEFM: function () { return (100 + this.wepDEFP + this.artDEFP) / 100 },
+                finalDEFM: function () { return (100 + this.baseDEFP + this.wepDEFP + this.artDEFP) / 100 },
                 finalDEF: function () { return this.baseDEF * this.finalDEFM + this.artDEF },
 
                 finalBaseATK: function () { return this.wepATK + this.baseATK },
-                finalATKM: function () { return (100 + this.wepATKP + this.artATKP) / 100 },
+                finalATKM: function () { return (100 + this.baseATKP + this.wepATKP + this.artATKP) / 100 },
                 finalATK: function () { return (this.finalBaseATK * this.finalATKM + this.finalDEF * this.defToAtkConv / 100 + this.artATK) },
 
-                finalCritP: function () { return 5 + this.wepCRITP + this.artCRITP },
-                finalCritDMG: function () { return 50 + this.wepCDMGP + this.artCDMGP },
+                finalCritP: function () { return 5 + this.baseCRITP + this.wepCRITP + this.artCRITP },
+                finalCritDMG: function () { return 50 + this.baseCDMGP + this.wepCDMGP + this.artCDMGP },
                 finalCritAvgM: function () { return 1 + this.finalCritP * this.finalCritDMG / 10000 },
 
                 finalMult: function () { return (this.artDmgMult + this.wepPassMult) / 100 },
-                finalDMG: function () { return 1 * this.finalATK * (1 + this.finalMult) },
+                finalDMG: function () { return this.motionVal / 100 * this.finalATK * (1 + this.finalMult) + this.finalHP * this.hpToDmgConv / 100 },
             }
         }
-        Vue.createApp(app).mount('#app')
-
-        // state to JSON (for export-import functionality)
-        // JSON.stringify(app.data())
+        const vueApp = Vue.createApp(app).mount('#app')
+        loadState(localStorage.getItem("state"))
     </script>
 </body>
 
