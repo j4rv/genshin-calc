@@ -114,6 +114,10 @@
                 <label for="baseCDMGP">Base Crit DMG%</label>
                 <input id="baseCDMGP" v-model.number="baseCDMGP" type="number" step=".1" onchange="onInputChange()">
             </div>
+            <div>
+                <label for="baseDMGP">Base Damage %</label>
+                <input id="baseDMGP" v-model.number="baseDMGP" type="number" step=".1" onchange="onInputChange()">
+            </div>
         </div>
 
         <div class="inputSet">
@@ -183,8 +187,8 @@
                 <input id="artCDMGP" v-model.number="artCDMGP" type="number" step=".1" onchange="onInputChange()">
             </div>
             <div>
-                <label for="artDmgMult">Damage Multiplier</label>
-                <input id="artDmgMult" v-model.number="artDmgMult" type="number" step=".1" onchange="onInputChange()">
+                <label for="artDMGP">Damage %</label>
+                <input id="artDMGP" v-model.number="artDMGP" type="number" step=".1" onchange="onInputChange()">
             </div>
         </div>
 
@@ -273,6 +277,7 @@
                 baseDEFP: 30,
                 baseCRITP: 0,
                 baseCDMGP: 0,
+                baseDMGP: 0,
 
                 wepATK: 510,
                 wepHPP: 0,
@@ -288,7 +293,7 @@
                 artATKP: 0,
                 artDEF: 0,
                 artDEFP: 0,
-                artDmgMult: 0,
+                artDMGP: 0,
                 artCRITP: 0,
                 artCDMGP: 0,
 
@@ -310,7 +315,7 @@
                 finalCritDMG: function () { return 50 + this.baseCDMGP + this.wepCDMGP + this.artCDMGP },
                 finalCritAvgM: function () { return 1 + this.finalCritP * this.finalCritDMG / 10000 },
 
-                finalMult: function () { return (this.artDmgMult + this.wepPassMult) / 100 },
+                finalMult: function () { return (this.baseDMGP + this.artDMGP + this.wepPassMult) / 100 },
                 finalDMG: function () { return this.motionVal / 100 * this.finalATK * (1 + this.finalMult) + this.finalHP * this.hpToDmgConv / 100 },
             }
         }
