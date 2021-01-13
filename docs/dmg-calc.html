@@ -1,0 +1,348 @@
+<!doctype html>
+
+<html lang="en">
+
+<head><meta charset="utf-8">
+<title>Genshin DMGCalc</title>
+<meta name="description" content="Yet Another Genshin Impact damage calculator">
+<meta name="author" content="J4RV">
+<link rel="stylesheet" href="https://j4rv.github.io/genshin-calc/style.css">
+<script src="https://unpkg.com/vue@3.0.4/dist/vue.global.prod.js"></script></head>
+
+<body>
+    <header><h1>Yet another Genshin Impact Damage Calculator</h1>
+<p>
+    <a class="link-button" href="https://j4rv.github.io/genshin-calc/dmg-calc.html">DMG Calculator</a>
+    <a class="link-button" href="https://j4rv.github.io/genshin-calc/res-shred.html">RES Shred Calc</a>
+</p></header>
+    <div id="app">
+        <div id="main-app">
+            <div class="inputSet">
+                <h3>Base stats <a target="_blank"
+                        href="https://genshin-impact.fandom.com/wiki/Attributes#Base_Stats">❓</a>
+                </h3>
+                <div>
+                    <label for="baseHP">Base HP</label>
+                    <input id="baseHP" v-model.number="baseHP" type="number" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="baseATK">Base ATK</label>
+                    <input id="baseATK" v-model.number="baseATK" type="number" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="baseDEF">Base DEF</label>
+                    <input id="baseDEF" v-model.number="baseDEF" type="number" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="baseHPP">Base HP%</label>
+                    <input id="baseHPP" v-model.number="baseHPP" type="number" step=".1" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="baseATKP">Base ATK%</label>
+                    <input id="baseATKP" v-model.number="baseATKP" type="number" step=".1" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="baseDEFP">Base DEF%</label>
+                    <input id="baseDEFP" v-model.number="baseDEFP" type="number" step=".1" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="baseCRITP">Base Crit%</label>
+                    <input id="baseCRITP" v-model.number="baseCRITP" type="number" step=".1" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="baseCDMGP">Base Crit DMG%</label>
+                    <input id="baseCDMGP" v-model.number="baseCDMGP" type="number" step=".1" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="baseDMGP">Base Damage %</label>
+                    <input id="baseDMGP" v-model.number="baseDMGP" type="number" step=".1" onchange="onInputChange()">
+                </div>
+            </div>
+
+            <div class="inputSet">
+                <h3>Weapon stats <a target="_blank" href="https://genshin-impact.fandom.com/wiki/Weapons">❓</a></h3>
+                <div>
+                    <label for="wepATK">Weapon ATK</label>
+                    <input id="wepATK" v-model.number="wepATK" type="number" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="wepHPP">Weapon HP%</label>
+                    <input id="wepHPP" v-model.number="wepHPP" type="number" step=".1" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="wepATKP">Weapon ATK%</label>
+                    <input id="wepATKP" v-model.number="wepATKP" type="number" step=".1" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="wepDEFP">Weapon DEF%</label>
+                    <input id="wepDEFP" v-model.number="wepDEFP" type="number" step=".1" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="wepCRITP">Weapon Crit%</label>
+                    <input id="wepCRITP" v-model.number="wepCRITP" type="number" step=".1" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="wepCDMGP">Weapon Crit DMG%</label>
+                    <input id="wepCDMGP" v-model.number="wepCDMGP" type="number" step=".1" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="wepPassMult">Passive Multiplier</label>
+                    <input id="wepPassMult" v-model.number="wepPassMult" type="number" step=".1"
+                        onchange="onInputChange()">
+                </div>
+            </div>
+
+            <div class="inputSet">
+                <h3>Artifact stats <a target="_blank" href="https://genshin-impact.fandom.com/wiki/Artifacts">❓</a></h3>
+                <div>
+                    <label for="artHP">Artifact HP</label>
+                    <input id="artHP" v-model.number="artHP" type="number" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="artHPP">Artifact HP%</label>
+                    <input id="artHPP" v-model.number="artHPP" type="number" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="artATK">Artifact ATK</label>
+                    <input id="artATK" v-model.number="artATK" type="number" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="artATKP">Artifact ATK%</label>
+                    <input id="artATKP" v-model.number="artATKP" type="number" step=".1" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="artDEF">Artifact DEF</label>
+                    <input id="artDEF" v-model.number="artDEF" type="number" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="artDEFP">Artifact DEF%</label>
+                    <input id="artDEFP" v-model.number="artDEFP" type="number" step=".1" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="artCRITP">Artifact Crit%</label>
+                    <input id="artCRITP" v-model.number="artCRITP" type="number" step=".1" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="artCDMGP">Artifact Crit DMG%</label>
+                    <input id="artCDMGP" v-model.number="artCDMGP" type="number" step=".1" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="artDMGP">Damage %</label>
+                    <input id="artDMGP" v-model.number="artDMGP" type="number" step=".1" onchange="onInputChange()">
+                </div>
+            </div>
+
+            <div class="inputSet">
+                <h3>Others</h3>
+                <div>
+                    <label for="motionVal">Motion value (%)</label>
+                    <input id="motionVal" v-model.number="motionVal" type="number" step=".1" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="defToAtkConv">DEF to ATK conversion (%) (Noelle's Q)</label>
+                    <input id="defToAtkConv" v-model.number="defToAtkConv" type="number" step=".1"
+                        onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="hpToAtkConv">HP to ATK conversion (%) (Hu Tao's E)</label>
+                    <input id="hpToAtkConv" v-model.number="hpToAtkConv" type="number" step=".01"
+                        onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="hpToDmgConv">HP to DMG conversion (%) (Zhongli's Q)</label>
+                    <input id="hpToDmgConv" v-model.number="hpToDmgConv" type="number" step=".1"
+                        onchange="onInputChange()">
+                </div>
+            </div>
+
+            <div class="inputSet">
+                <h3>Final stats</h3>
+                <table>
+                    <tr>
+                        <th>Final HP</th>
+                        <td>{{ Math.trunc(finalHP) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Final ATK</th>
+                        <td>{{ Math.trunc(finalATK) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Final DEF</th>
+                        <td>{{ Math.trunc(finalDEF) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Final Crit%</th>
+                        <td>{{ Math.trunc(finalCritP*10)/10 }}</td>
+                    </tr>
+                    <tr>
+                        <th>Final Crit DMG%</th>
+                        <td>{{ Math.trunc(finalCritDMG*10)/10 }}</td>
+                    </tr>
+                    <tr>
+                        <th>Final non-crit DMG</th>
+                        <td>{{ Math.trunc(finalDMG) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Final crit DMG</th>
+                        <td>{{ Math.trunc(finalDMG * ( 1 + finalCritDMG / 100)) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Final average DMG</th>
+                        <td>{{ Math.trunc(finalDMG * finalCritAvgM) }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div style="margin: 32px 0;">
+            <div>
+                <label for="buildname">Save build as: </label>
+                <input id="buildname" class="long-input" v-model="buildname" type="text" onchange="onInputChange()">
+                <button onclick="saveBuild()">Save</button>
+            </div>
+            <div>
+                <label for="selectedBuild">Load saved build: </label>
+                <select id="selectedBuild" v-model="selectedBuild" class="long-input">
+                    <option value="">None</option>
+                    <option v-for="sb in savedBuilds">
+                        {{ sb }}
+                    </option>
+                </select>
+                <button onclick="loadBuild()">Load</button>
+            </div>
+            <div>
+                <label for="clearBuilds">Delete saved builds: </label>
+                <button id="clearBuilds" class="button-danger" onclick="clearBuilds()">Delete</button>
+            </div>
+        </div>
+    </div>
+    <div class="note">
+        <p>Final stats DMG does not have enemy DEF and RES into account, so your character's real damage will be lower.
+        </p>
+        <p>You can still use those values to compare different builds.</p>
+    </div>
+    <footer><p>Made by J4RV with Vue.</p>
+<a class="link-button" href="https://github.com/j4rv/genshin-calc">Source</a></footer>
+
+    <script>
+        let lastSaveMoment = 0
+        let timeBetweenSaves = 500
+        const onInputChange = () => {
+            if (lastSaveMoment + timeBetweenSaves > new Date().getTime()) {
+                return
+            }
+            saveState()
+        }
+
+        const saveState = () => {
+            let state = JSON.stringify(vueApp.$data)
+            localStorage.setItem("state", state)
+            lastSaveMoment = new Date().getTime()
+        }
+
+        const loadState = (jsonState) => {
+            let state = JSON.parse(jsonState)
+            for (key in state) {
+                if (["buildname", "savedBuilds", "selectedBuild"].includes(key)) {
+                    continue
+                }
+                vueApp[key] = state[key]
+            }
+        }
+
+        const saveBuild = () => {
+            let state = vueApp.$data
+            if (!state.savedBuilds.includes(state.buildname)) {
+                vueApp["savedBuilds"] = [...state.savedBuilds, state.buildname]
+            }
+            let jsonState = JSON.stringify(state)
+            console.log("saving build", "build_" + state.buildname, jsonState)
+            localStorage.setItem("build_" + state.buildname, jsonState)
+            saveState()
+        }
+
+        const loadBuild = () => {
+            let state = vueApp.$data
+            let jsonState = localStorage.getItem("build_" + state.selectedBuild)
+            console.log("loading build", "build_" + state.selectedBuild, jsonState)
+            loadState(jsonState)
+        }
+
+        const clearBuilds = () => {
+            if (window.confirm("Do you really want to delete all your saved builds?")) {
+                let state = vueApp.$data
+                for (sb of state.savedBuilds) {
+                    localStorage.removeItem("build_" + sb)
+                }
+                vueApp["savedBuilds"] = []
+                saveState()
+            }
+        }
+
+        const app = {
+            data: () => ({
+                baseHP: 10000,
+                baseATK: 100,
+                baseDEF: 600,
+                baseHPP: 0,
+                baseATKP: 0,
+                baseDEFP: 0,
+                baseCRITP: 0,
+                baseCDMGP: 0,
+                baseDMGP: 0,
+
+                wepATK: 510,
+                wepHPP: 0,
+                wepATKP: 0,
+                wepDEFP: 0,
+                wepCRITP: 0,
+                wepCDMGP: 0,
+                wepPassMult: 0,
+
+                artHP: 0,
+                artHPP: 0,
+                artATK: 0,
+                artATKP: 0,
+                artDEF: 0,
+                artDEFP: 0,
+                artDMGP: 0,
+                artCRITP: 0,
+                artCDMGP: 0,
+
+                motionVal: 100,
+                defToAtkConv: 0,
+                hpToAtkConv: 0,
+                hpToDmgConv: 0,
+
+                buildname: "Unnamed build",
+                savedBuilds: [],
+                selectedBuild: "",
+            }),
+            computed: {
+                finalHP: function () { return this.baseHP * (1 + (this.baseHPP + this.wepHPP + this.artHPP) / 100) + this.artHP },
+
+                finalDEFM: function () { return (100 + this.baseDEFP + this.wepDEFP + this.artDEFP) / 100 },
+                finalDEF: function () { return this.baseDEF * this.finalDEFM + this.artDEF },
+
+                finalBaseATK: function () { return this.wepATK + this.baseATK },
+                finalATKP: function () { return (100 + this.baseATKP + this.wepATKP + this.artATKP) / 100 },
+                finalATK: function () {
+                    return (this.finalBaseATK * this.finalATKP + this.artATK
+                        + this.finalDEF * this.defToAtkConv / 100
+                        + this.finalHP * this.hpToAtkConv / 100
+                    )
+                },
+
+                finalCritP: function () { return 5 + this.baseCRITP + this.wepCRITP + this.artCRITP },
+                finalCritDMG: function () { return 50 + this.baseCDMGP + this.wepCDMGP + this.artCDMGP },
+                finalCritAvgM: function () { return 1 + this.finalCritP * this.finalCritDMG / 10000 },
+
+                finalMult: function () { return (this.baseDMGP + this.artDMGP + this.wepPassMult) / 100 },
+                finalDMG: function () { return this.motionVal / 100 * this.finalATK * (1 + this.finalMult) + this.finalHP * this.hpToDmgConv / 100 },
+            }
+        }
+        const vueApp = Vue.createApp(app).mount('#app')
+        loadState(localStorage.getItem("state"))
+    </script>
+</body>
+
+</html>

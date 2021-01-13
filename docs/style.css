@@ -1,0 +1,129 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    background-color: #111;
+    color: #EEE;
+    text-align: center;
+}
+
+header {
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+}
+
+label {
+    width: 10em;
+    display: inline-block;
+    text-align: left;
+}
+
+a {
+    text-decoration: none;
+}
+
+input {
+    background: transparent;
+    border: none;
+    border-bottom-color: currentcolor;
+    border-bottom-style: none;
+    border-bottom-width: medium;
+    border-bottom: 1px #EEE solid;
+    color: #FF6D6D;
+    font-weight: bold;
+    margin-bottom: 0.8em;
+    width: 5em;
+}
+
+.long-input {
+    width: 10em;
+}
+
+button {
+    color: white;
+    background: #1a7eff;
+    border: none;
+    border-radius: 3px;
+    padding: 4px;
+    width: 5em;
+    font-weight: bold;
+    margin: 8px;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    box-shadow: 0 0 4px 2px #3ec9ff inset;
+}
+
+button:active {
+    background-color: #105cbd;
+    box-shadow: 0 2px 6px #132348 inset;
+}
+
+.button-danger {
+    background: #ff1a1a;
+}
+
+.button-danger:hover {
+    box-shadow: 0 0 4px 2px #ff5b3e inset;
+}
+
+.button-danger:active {
+    background-color: #ad1c1c;
+    box-shadow: 0 2px 6px #410a1b inset;
+}
+
+select {
+    background: transparent;
+    border: 1px white solid;
+    border-radius: 3px;
+    color: white;
+    box-sizing: content-box;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+table {
+    text-align: left;
+}
+
+th,
+td {
+    padding: 0 16px 8px 0;
+}
+
+#main-app {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.inputSet {
+    padding: 8px;
+}
+
+.link-button {
+    padding: 4px;
+    border: 1px white solid;
+    border-radius: 6px;
+    color: white;
+}
+
+.note {
+    display: inline-block;
+    padding: 8px;
+    background: #ffb9331a;
+    border: 1px #ffb933 solid;
+    border-radius: 6px;
+}

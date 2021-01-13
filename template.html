@@ -1,0 +1,25 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>[[template "head.html" .]]</head>
+
+<body>
+    <header>[[template "header.html" .]]</header>
+    <div id="app"></div>
+    <footer>[[template "footer.html" .]]</footer>
+
+    <script>
+        const app = {
+            data: () => ({
+                // data vars here
+            }),
+            computed: {
+                // computed vars here
+            }
+        }
+        const vueApp = Vue.createApp(app).mount('#app')
+    </script>
+</body>
+
+</html>

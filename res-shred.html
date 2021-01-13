@@ -1,0 +1,81 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>[[template "head.html" .]]</head>
+
+<body>
+    <header>[[template "header.html" .]]</header>
+    <div id="app">
+        <div id="main-app">
+            <div class="inputSet">
+                <h3>Inputs</h3>
+                <div>
+                    <label for="enemyRES">Enemy resistance %</label>
+                    <input id="enemyRES" v-model.number="enemyRES" type="number" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="shred">RES shred %</label>
+                    <input id="shred" v-model.number="shred" type="number" onchange="onInputChange()">
+                </div>
+            </div>
+            <div class="inputSet">
+                <h3>Result <a target="_blank" href="https://genshin-impact.fandom.com/wiki/Damage#Resistance">❓</a></h3>
+                <table>
+                    <tr>
+                        <th>Pre-shred res %</th>
+                        <td>{{ enemyRES }}</td>
+                    </tr>
+                    <tr>
+                        <th>Post-shred res %</th>
+                        <td>{{ enemyRES - shred }}</td>
+                    </tr>
+                    <tr>
+                        <th>Pre-shred res multiplier</th>
+                        <td>{{ Math.trunc(preShredMult*100)/100 }}</td>
+                    </tr>
+                    <tr>
+                        <th>Post-shred res multiplier</th>
+                        <td>{{ Math.trunc(postShredMult*100)/100 }}</td>
+                    </tr>
+                    <tr>
+                        <th>Damage increase</th>
+                        <td>{{ Math.trunc((dmgInc-1)*10000)/100 }}%</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <footer>[[template "footer.html" .]]</footer>
+
+    <script>
+        const onInputChange = () => {
+            // no-op
+        }
+
+        const calcResMult = resPercent => {
+            if (resPercent < 0) {
+                return 1 - (resPercent / 200)
+            }
+            if (resPercent < 75) {
+                return 1 - (resPercent / 100)
+            }
+            return 1 / ((4 * resPercent / 100) + 1)
+        }
+
+        const app = {
+            data: () => ({
+                enemyRES: 10,
+                shred: 40,
+            }),
+            computed: {
+                preShredMult: function () { return calcResMult(this.enemyRES) },
+                postShredMult: function () { return calcResMult(this.enemyRES - this.shred) },
+                dmgInc: function () { return this.postShredMult / this.preShredMult },
+            }
+        }
+        const vueApp = Vue.createApp(app).mount('#app')
+    </script>
+</body>
+
+</html>
