@@ -1,0 +1,72 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>[[template "head.html" .]]</head>
+
+<body>
+    <header>[[template "header.html" .]]</header>
+    <div id="app">
+        <div id="main-app">
+            <div class="inputSet">
+                <h3>Inputs</h3>
+                <div>
+                    <label for="charLVL1">Current character level</label>
+                    <input id="charLVL1" v-model.number="charLVL1" type="number" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="charLVL2">Character level after leveling</label>
+                    <input id="charLVL2" v-model.number="charLVL2" type="number" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="enemyLVL">Enemy level</label>
+                    <input id="enemyLVL" v-model.number="enemyLVL" type="number" onchange="onInputChange()">
+                </div>
+            </div>
+            <div class="inputSet">
+                <h3>Result <a target="_blank" href="https://genshin-impact.fandom.com/wiki/Damage#Defense">❓</a></h3>
+                <table>
+                    <tr>
+                        <th>Pre-leveling DEF multiplier</th>
+                        <td>{{ Math.trunc(preLvlMult*100)/100 }}</td>
+                    </tr>
+                    <tr>
+                        <th>Post-leveling DEF multiplier</th>
+                        <td>{{ Math.trunc(postLvlMult*100)/100 }}</td>
+                    </tr>
+                    <tr>
+                        <th>Damage increase</th>
+                        <td>{{ Math.trunc((dmgInc-1)*10000)/100 }}%</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <footer>[[template "footer.html" .]]</footer>
+
+    <script>
+        const onInputChange = () => {
+            // no-op
+        }
+
+        const calcDefMult = (charLVL, enemyLVL) => {
+            return (charLVL + 100) / (enemyLVL + charLVL + 200)
+        }
+
+        const app = {
+            data: () => ({
+                charLVL1: 70,
+                charLVL2: 80,
+                enemyLVL: 90,
+            }),
+            computed: {
+                preLvlMult: function () { return calcDefMult(this.charLVL1, this.enemyLVL) },
+                postLvlMult: function () { return calcDefMult(this.charLVL2, this.enemyLVL) },
+                dmgInc: function () { return this.postLvlMult / this.preLvlMult },
+            }
+        }
+        const vueApp = Vue.createApp(app).mount('#app')
+    </script>
+</body>
+
+</html>

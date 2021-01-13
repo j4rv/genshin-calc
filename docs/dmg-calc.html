@@ -3,17 +3,18 @@
 <html lang="en">
 
 <head><meta charset="utf-8">
-<title>Genshin DMGCalc</title>
+<title>YagidCalc</title>
 <meta name="description" content="Yet Another Genshin Impact damage calculator">
 <meta name="author" content="J4RV">
 <link rel="stylesheet" href="https://j4rv.github.io/genshin-calc/style.css">
 <script src="https://unpkg.com/vue@3.0.4/dist/vue.global.prod.js"></script></head>
 
 <body>
-    <header><h1>Yet another Genshin Impact Damage Calculator</h1>
+    <header><h1>Yet Another Genshin Impact Damage Calculator</h1>
 <p>
     <a class="link-button" href="https://j4rv.github.io/genshin-calc/dmg-calc.html">DMG Calculator</a>
     <a class="link-button" href="https://j4rv.github.io/genshin-calc/res-shred.html">RES Shred Calc</a>
+    <a class="link-button" href="https://j4rv.github.io/genshin-calc/lvl-diff.html">LVL Diff Calc</a>
 </p></header>
     <div id="app">
         <div id="main-app">
@@ -265,6 +266,7 @@
             let jsonState = localStorage.getItem("build_" + state.selectedBuild)
             console.log("loading build", "build_" + state.selectedBuild, jsonState)
             loadState(jsonState)
+            saveState()
         }
 
         const clearBuilds = () => {
