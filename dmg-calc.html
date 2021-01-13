@@ -118,7 +118,7 @@
                     <input id="artCDMGP" v-model.number="artCDMGP" type="number" step=".1" onchange="onInputChange()">
                 </div>
                 <div>
-                    <label for="artDMGP">Damage %</label>
+                    <label for="artDMGP">Artifact Damage %</label>
                     <input id="artDMGP" v-model.number="artDMGP" type="number" step=".1" onchange="onInputChange()">
                 </div>
             </div>
@@ -126,23 +126,24 @@
             <div class="inputSet">
                 <h3>Others</h3>
                 <div>
-                    <label for="motionVal">Motion value (%)</label>
-                    <input id="motionVal" v-model.number="motionVal" type="number" step=".1" onchange="onInputChange()">
+                    <label for="atkMV">ATK Motion value (%)</label>
+                    <input id="atkMV" v-model.number="atkMV" type="number" step=".1" onchange="onInputChange()">
                 </div>
                 <div>
-                    <label for="defToAtkConv">DEF to ATK conversion (%) (Noelle's Q)</label>
-                    <input id="defToAtkConv" v-model.number="defToAtkConv" type="number" step=".1"
-                        onchange="onInputChange()">
+                    <label for="hpMV">HP Motion value (%) (Zhongli's Q)</label>
+                    <input id="hpMV" v-model.number="hpMV" type="number" step=".01" onchange="onInputChange()">
                 </div>
                 <div>
-                    <label for="hpToAtkConv">HP to ATK conversion (%) (Hu Tao's E)</label>
-                    <input id="hpToAtkConv" v-model.number="hpToAtkConv" type="number" step=".01"
-                        onchange="onInputChange()">
+                    <label for="defMV">DEF Motion value (%) (Albedo's E)</label>
+                    <input id="defMV" v-model.number="defMV" type="number" step=".01" onchange="onInputChange()">
                 </div>
                 <div>
-                    <label for="hpToDmgConv">HP to DMG conversion (%) (Zhongli's Q)</label>
-                    <input id="hpToDmgConv" v-model.number="hpToDmgConv" type="number" step=".1"
-                        onchange="onInputChange()">
+                    <label for="hpToAtk">HP to ATK (%) (Hu Tao's E)</label>
+                    <input id="hpToAtk" v-model.number="hpToAtk" type="number" step=".01" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="defToAtk">DEF to ATK (%) (Noelle's Q)</label>
+                    <input id="defToAtk" v-model.number="defToAtk" type="number" step=".1" onchange="onInputChange()">
                 </div>
             </div>
 
@@ -187,7 +188,7 @@
         <div style="margin: 32px 0;">
             <div>
                 <label for="buildname">Save build as: </label>
-                <input id="buildname" class="long-input" v-model="buildname" type="text" onchange="onInputChange()">
+                <input id="buildname" class="long-input" v-model="buildname" type="text">
                 <button onclick="saveBuild()">Save</button>
             </div>
             <div>
@@ -232,9 +233,6 @@
         const loadState = (jsonState) => {
             let state = JSON.parse(jsonState)
             for (key in state) {
-                if (["savedBuilds", "selectedBuild"].includes(key)) {
-                    continue
-                }
                 vueApp[key] = state[key]
             }
         }
@@ -244,6 +242,7 @@
             if (!state.savedBuilds.includes(state.buildname)) {
                 vueApp["savedBuilds"] = [...state.savedBuilds, state.buildname]
             }
+            state.savedBuilds = vueApp["savedBuilds"]
             let jsonState = JSON.stringify(state)
             console.log("saving build", "build_" + state.buildname, jsonState)
             localStorage.setItem("build_" + state.buildname, jsonState)
@@ -251,10 +250,15 @@
         }
 
         const loadBuild = () => {
-            let state = vueApp.$data
-            let jsonState = localStorage.getItem("build_" + state.selectedBuild)
+            let jsonState = localStorage.getItem("build_" + vueApp["selectedBuild"])
+            let state = JSON.parse(jsonState)
             console.log("loading build", "build_" + state.selectedBuild, jsonState)
-            loadState(jsonState)
+            for (key in state) {
+                if (["savedBuilds"].includes(key)) {
+                    continue
+                }
+                vueApp[key] = state[key]
+            }
             saveState()
         }
 
@@ -299,10 +303,11 @@
                 artCRITP: 0,
                 artCDMGP: 0,
 
-                motionVal: 100,
-                defToAtkConv: 0,
-                hpToAtkConv: 0,
-                hpToDmgConv: 0,
+                atkMV: 100,
+                defToAtk: 0,
+                hpToAtk: 0,
+                hpMV: 0,
+                defMV: 0,
 
                 buildname: "Unnamed build",
                 savedBuilds: [],
@@ -317,9 +322,10 @@
                 finalBaseATK: function () { return this.wepATK + this.baseATK },
                 finalATKP: function () { return (100 + this.baseATKP + this.wepATKP + this.artATKP) / 100 },
                 finalATK: function () {
-                    return (this.finalBaseATK * this.finalATKP + this.artATK
-                        + this.finalDEF * this.defToAtkConv / 100
-                        + this.finalHP * this.hpToAtkConv / 100
+                    return (
+                        this.finalBaseATK * this.finalATKP + this.artATK
+                        + this.finalDEF * this.defToAtk / 100
+                        + this.finalHP * this.hpToAtk / 100
                     )
                 },
 
@@ -328,7 +334,13 @@
                 finalCritAvgM: function () { return 1 + this.finalCritP * this.finalCritDMG / 10000 },
 
                 finalMult: function () { return (this.baseDMGP + this.artDMGP + this.wepPassMult) / 100 },
-                finalDMG: function () { return this.motionVal / 100 * this.finalATK * (1 + this.finalMult) + this.finalHP * this.hpToDmgConv / 100 },
+                finalDMG: function () {
+                    return (
+                        this.atkMV / 100 * this.finalATK * (1 + this.finalMult)
+                        + this.finalHP * this.hpMV / 100
+                        + this.finalDEF * this.defMV / 100
+                    )
+                },
             }
         }
         const vueApp = Vue.createApp(app).mount('#app')
