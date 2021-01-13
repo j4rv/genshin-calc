@@ -242,7 +242,7 @@
         const loadState = (jsonState) => {
             let state = JSON.parse(jsonState)
             for (key in state) {
-                if (["buildname", "savedBuilds", "selectedBuild"].includes(key)) {
+                if (["savedBuilds", "selectedBuild"].includes(key)) {
                     continue
                 }
                 vueApp[key] = state[key]

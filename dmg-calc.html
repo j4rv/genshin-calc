@@ -232,7 +232,7 @@
         const loadState = (jsonState) => {
             let state = JSON.parse(jsonState)
             for (key in state) {
-                if (["buildname", "savedBuilds", "selectedBuild"].includes(key)) {
+                if (["savedBuilds", "selectedBuild"].includes(key)) {
                     continue
                 }
                 vueApp[key] = state[key]
@@ -255,6 +255,7 @@
             let jsonState = localStorage.getItem("build_" + state.selectedBuild)
             console.log("loading build", "build_" + state.selectedBuild, jsonState)
             loadState(jsonState)
+            saveState()
         }
 
         const clearBuilds = () => {
