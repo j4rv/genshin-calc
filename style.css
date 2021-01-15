@@ -5,8 +5,8 @@ body {
     text-align: center;
 }
 
-header {
-    text-align: center;
+h1 {
+    color: #FF4A4A;
 }
 
 footer {
@@ -118,6 +118,10 @@ td {
     border: 1px white solid;
     border-radius: 6px;
     color: white;
+}
+
+.link-button:hover {
+    box-shadow: 0 0 4px 2px #FFF4 inset;
 }
 
 .note {

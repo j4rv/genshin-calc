@@ -5,9 +5,30 @@
 <head>[[template "head.html" .]]</head>
 
 <body>
+    <style>
+        #index {
+            margin-top: 3em;
+        }
+
+        #index-intro {
+            display: inline-block;
+            text-align: left;
+        }
+    </style>
+
     <header>[[template "header.html" .]]</header>
-    <div>TODO: Add index stuff</div>
+
+    <div id="index">
+        <h3>A collection of Genshin Impact calculators.</h3>
+        <div id="index-intro">
+            <p><b>DMG Calculator: </b>For comparing different builds.</p>
+            <p><b>RES Shred Calc: </b>To know how effective RES shred is against a certain enemy.</p>
+            <p><b>LVL Diff Calc: </b>To know how much extra damage you get from character-enemy level difference.</p>
+        </div>
+    </div>
+
     <footer>[[template "footer.html" .]]</footer>
+
 </body>
 
 </html>

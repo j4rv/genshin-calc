@@ -6,8 +6,52 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path"
 	"strings"
 )
+
+func main() {
+	parseDocs()
+
+	fs := http.FileServer(http.Dir("local"))
+	http.Handle("/", fs)
+
+	log.Println("Listening on :80...")
+	err := http.ListenAndServe(":80", execRequest(http.DefaultServeMux))
+	if err != nil {
+		log.Panic(err)
+	}
+}
+
+func execRequest(handler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		url := r.URL.String()
+		log.Printf("from: %s %s\n", r.RemoteAddr, url)
+		if url == "/" {
+			url = "index.html"
+		}
+		if strings.HasSuffix(url, ".html") || strings.HasSuffix(url, ".css") {
+			parseDoc(url)
+		}
+		handler.ServeHTTP(w, r)
+	})
+}
+
+func parseDocs() {
+	files, err := ioutil.ReadDir(".")
+	if err != nil {
+		log.Panic(err)
+	}
+
+	os.Mkdir("docs", os.ModePerm)
+	os.Mkdir("local", os.ModePerm)
+	for _, file := range files {
+		name := file.Name()
+		if strings.HasSuffix(name, ".html") || strings.HasSuffix(name, ".css") {
+			parseDoc(name)
+		}
+	}
+}
 
 type tmplData struct {
 	BaseURL string
@@ -24,55 +68,23 @@ var devTmplData = tmplData{
 	VueSRC:  "https://unpkg.com/vue@3.0.4/dist/vue.global.js",
 }
 
-func main() {
-	parseDocs()
-
-	fs := http.FileServer(http.Dir("local"))
-	http.Handle("/", fs)
-
-	log.Println("Listening on :80...")
-	err := http.ListenAndServe(":80", nil)
-	if err != nil {
-		log.Panic(err)
-	}
+func parseDoc(name string) {
+	name = path.Base(name)
+	renderTmplToFile(name, path.Join("local", name), devTmplData)
+	renderTmplToFile(name, path.Join("docs", name), prodTmplData)
 }
 
-var templates = []string{"template.html", "header.html", "footer.html", "head.html"}
-
-func parseDocs() {
-	files, err := ioutil.ReadDir(".")
-	if err != nil {
-		log.Panic(err)
-	}
-
-	os.Mkdir("docs", os.ModePerm)
-	os.Mkdir("local", os.ModePerm)
-
-	for _, file := range files {
-		name := file.Name()
-		switch {
-		case contains(name, templates):
-			continue
-		case strings.HasSuffix(name, ".html"), strings.HasSuffix(name, ".css"):
-			renderTmplToFile(name, "./local/"+name, devTmplData)
-			renderTmplToFile(name, "./docs/"+name, prodTmplData)
-		}
-	}
-}
-
-func contains(s string, ss []string) bool {
-	for i := range ss {
-		if ss[i] == s {
-			return true
-		}
-	}
-	return false
+var partialTemplates = []string{
+	"template.html",
+	"header.html",
+	"footer.html",
+	"head.html",
 }
 
 func renderTmplToFile(tmplName, fileName string, data tmplData) {
+	log.Println("rendering", fileName)
 	filesToParse := []string{tmplName}
-	filesToParse = append(filesToParse, templates...)
-	log.Println("parsing", filesToParse)
+	filesToParse = append(filesToParse, partialTemplates...)
 	withCustomDelims := template.New("").Delims("[[", "]]")
 	tmpl, err := withCustomDelims.ParseFiles(filesToParse...)
 	if err != nil {
@@ -85,9 +97,17 @@ func renderTmplToFile(tmplName, fileName string, data tmplData) {
 	}
 	defer f.Close()
 
-	log.Println("rendering", fileName)
 	err = tmpl.ExecuteTemplate(f, tmplName, data)
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func contains(s string, ss []string) bool {
+	for i := range ss {
+		if ss[i] == s {
+			return true
+		}
+	}
+	return false
 }
