@@ -331,7 +331,7 @@
 
                 finalCritP: function () { return 5 + this.baseCRITP + this.wepCRITP + this.artCRITP },
                 finalCritDMG: function () { return 50 + this.baseCDMGP + this.wepCDMGP + this.artCDMGP },
-                finalCritAvgM: function () { return 1 + this.finalCritP * this.finalCritDMG / 10000 },
+                finalCritAvgM: function () { return 1 + Math.min(this.finalCritP, 100) * this.finalCritDMG / 10000 },
 
                 finalMult: function () { return (this.baseDMGP + this.artDMGP + this.wepPassMult) / 100 },
                 finalDMG: function () {
