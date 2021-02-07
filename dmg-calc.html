@@ -336,9 +336,8 @@
                 finalMult: function () { return (this.baseDMGP + this.artDMGP + this.wepPassMult) / 100 },
                 finalDMG: function () {
                     return (
-                        this.atkMV / 100 * this.finalATK * (1 + this.finalMult)
-                        + this.finalHP * this.hpMV / 100
-                        + this.finalDEF * this.defMV / 100
+                        (this.atkMV / 100 * this.finalATK + this.hpMV / 100 * this.finalHP + this.defMV / 100 * this.finalDEF)
+                        * (1 + this.finalMult)
                     )
                 },
             }

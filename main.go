@@ -25,7 +25,7 @@ func main() {
 
 func execRequest(handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		url := r.URL.String()
+		url := path.Base(r.URL.String())
 		log.Printf("from: %s %s\n", r.RemoteAddr, url)
 		if url == "/" {
 			url = "index.html"
@@ -46,9 +46,11 @@ func parseDocs() {
 	os.Mkdir("docs", os.ModePerm)
 	os.Mkdir("local", os.ModePerm)
 	for _, file := range files {
-		name := file.Name()
+		name := path.Base(file.Name())
 		if strings.HasSuffix(name, ".html") || strings.HasSuffix(name, ".css") {
-			parseDoc(name)
+			if !contains(name, partialTemplates) {
+				parseDoc(name)
+			}
 		}
 	}
 }
@@ -69,7 +71,6 @@ var devTmplData = tmplData{
 }
 
 func parseDoc(name string) {
-	name = path.Base(name)
 	renderTmplToFile(name, path.Join("local", name), devTmplData)
 	renderTmplToFile(name, path.Join("docs", name), prodTmplData)
 }
