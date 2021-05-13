@@ -73,7 +73,7 @@ vueApp.component('char-build', {
             <input id="ER" v-model.number="ER" type="number" step=".1">
         </div>
         <div>
-            <label for="DMGP">Base Damage %</label>
+            <label for="DMGP">Damage multipliers</label>
             <input id="DMGP" v-model.number="DMGP" type="number" step=".1">
         </div>
 
