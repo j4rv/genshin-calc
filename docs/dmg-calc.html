@@ -15,6 +15,7 @@
 </a>
 <p>
     <a class="link-button" href="https://j4rv.github.io/genshin-calc/dmg-calc.html">DMG Calculator</a>
+    <a class="link-button" href="https://j4rv.github.io/genshin-calc/compare-builds.html">Simpler DMG Calculator</a>
     <a class="link-button" href="https://j4rv.github.io/genshin-calc/res-shred.html">RES Shred Calc</a>
     <a class="link-button" href="https://j4rv.github.io/genshin-calc/lvl-diff.html">LVL Diff Calc</a>
 </p></header>
@@ -183,15 +184,15 @@
                         <td>{{ Math.trunc(finalCritDMG*10)/10 }}</td>
                     </tr>
                     <tr>
-                        <th>Final non-crit DMG</th>
+                        <th>Non-crit DMG</th>
                         <td>{{ Math.trunc(finalDMG) }}</td>
                     </tr>
                     <tr>
-                        <th>Final crit DMG</th>
+                        <th>Crit DMG</th>
                         <td>{{ Math.trunc(finalDMG * ( 1 + finalCritDMG / 100)) }}</td>
                     </tr>
                     <tr>
-                        <th>Final average DMG</th>
+                        <th>Average DMG</th>
                         <td>{{ Math.trunc(finalDMG * finalCritAvgM) }}</td>
                     </tr>
                 </table>

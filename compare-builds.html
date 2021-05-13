@@ -1,0 +1,38 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>[[template "head.html" .]]</head>
+
+<body>
+    <header>[[template "header.html" .]]</header>
+    
+    <div class="note">
+        <p>Reloading this page will reset the builds, but you can still paste your latest copy.</p>
+    </div>
+
+    <div id="app">
+        <div id="main-app">
+            <char-build></char-build>
+            <char-build></char-build>
+            <char-build></char-build>
+        </div>
+    </div>
+
+    <div class="note">
+        <p>Final stats DMG does not have enemy DEF and RES into account, so your character's real damage will be lower.
+        </p>
+        <p>You can still use those values to compare different builds.</p>
+    </div>
+    <footer>[[template "footer.html" .]]</footer>
+
+    <script>
+        const vueApp = Vue.createApp({})
+        // cargamos los vue components después de crear vueApp, pero antes de montarlo 
+        [[template "char-build.vue" .]]
+        const mounted = vueApp.mount('#app')
+    </script>
+
+</body>
+
+</html>

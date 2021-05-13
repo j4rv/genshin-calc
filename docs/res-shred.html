@@ -15,6 +15,7 @@
 </a>
 <p>
     <a class="link-button" href="https://j4rv.github.io/genshin-calc/dmg-calc.html">DMG Calculator</a>
+    <a class="link-button" href="https://j4rv.github.io/genshin-calc/compare-builds.html">Simpler DMG Calculator</a>
     <a class="link-button" href="https://j4rv.github.io/genshin-calc/res-shred.html">RES Shred Calc</a>
     <a class="link-button" href="https://j4rv.github.io/genshin-calc/lvl-diff.html">LVL Diff Calc</a>
 </p></header>
@@ -34,14 +35,6 @@
             <div class="inputSet">
                 <h3>Result <a target="_blank" href="https://genshin-impact.fandom.com/wiki/Damage#Resistance">❓</a></h3>
                 <table>
-                    <tr>
-                        <th>Pre-shred res %</th>
-                        <td>{{ enemyRES }}</td>
-                    </tr>
-                    <tr>
-                        <th>Post-shred res %</th>
-                        <td>{{ enemyRES - shred }}</td>
-                    </tr>
                     <tr>
                         <th>Pre-shred res multiplier</th>
                         <td>{{ Math.trunc(preShredMult*100)/100 }}</td>

@@ -15,6 +15,7 @@
 </a>
 <p>
     <a class="link-button" href="https://j4rv.github.io/genshin-calc/dmg-calc.html">DMG Calculator</a>
+    <a class="link-button" href="https://j4rv.github.io/genshin-calc/compare-builds.html">Simpler DMG Calculator</a>
     <a class="link-button" href="https://j4rv.github.io/genshin-calc/res-shred.html">RES Shred Calc</a>
     <a class="link-button" href="https://j4rv.github.io/genshin-calc/lvl-diff.html">LVL Diff Calc</a>
 </p></header>
@@ -33,6 +34,10 @@
                 <div>
                     <label for="enemyLVL">Enemy level</label>
                     <input id="enemyLVL" v-model.number="enemyLVL" type="number" onchange="onInputChange()">
+                </div>
+                <div>
+                    <label for="defShred">DEF Shred</label>
+                    <input id="defShred" v-model.number="defShred" type="number" onchange="onInputChange()">
                 </div>
             </div>
             <div class="inputSet">
@@ -62,8 +67,9 @@
             
         }
 
-        const calcDefMult = (charLVL, enemyLVL) => {
-            return (charLVL + 100) / (enemyLVL + charLVL + 200)
+        const calcDefMult = (charLVL, enemyLVL, defShred) => {
+            let m = 1 - (defShred / 100);
+            return (charLVL + 100) / ((enemyLVL + 100) * m + (charLVL + 100))
         }
 
         const app = {
@@ -71,10 +77,11 @@
                 charLVL1: 70,
                 charLVL2: 80,
                 enemyLVL: 90,
+                defShred: 0,
             }),
             computed: {
-                preLvlMult: function () { return calcDefMult(this.charLVL1, this.enemyLVL) },
-                postLvlMult: function () { return calcDefMult(this.charLVL2, this.enemyLVL) },
+                preLvlMult: function () { return calcDefMult(this.charLVL1, this.enemyLVL, this.defShred) },
+                postLvlMult: function () { return calcDefMult(this.charLVL2, this.enemyLVL, this.defShred) },
                 dmgInc: function () { return this.postLvlMult / this.preLvlMult },
             }
         }

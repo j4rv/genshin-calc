@@ -22,6 +22,10 @@
                     <label for="enemyLVL">Enemy level</label>
                     <input id="enemyLVL" v-model.number="enemyLVL" type="number" onchange="onInputChange()">
                 </div>
+                <div>
+                    <label for="defShred">DEF Shred</label>
+                    <input id="defShred" v-model.number="defShred" type="number" onchange="onInputChange()">
+                </div>
             </div>
             <div class="inputSet">
                 <h3>Result <a target="_blank" href="https://genshin-impact.fandom.com/wiki/Damage#Defense">❓</a></h3>
@@ -49,8 +53,9 @@
             // no-op
         }
 
-        const calcDefMult = (charLVL, enemyLVL) => {
-            return (charLVL + 100) / (enemyLVL + charLVL + 200)
+        const calcDefMult = (charLVL, enemyLVL, defShred) => {
+            let m = 1 - (defShred / 100);
+            return (charLVL + 100) / ((enemyLVL + 100) * m + (charLVL + 100))
         }
 
         const app = {
@@ -58,10 +63,11 @@
                 charLVL1: 70,
                 charLVL2: 80,
                 enemyLVL: 90,
+                defShred: 0,
             }),
             computed: {
-                preLvlMult: function () { return calcDefMult(this.charLVL1, this.enemyLVL) },
-                postLvlMult: function () { return calcDefMult(this.charLVL2, this.enemyLVL) },
+                preLvlMult: function () { return calcDefMult(this.charLVL1, this.enemyLVL, this.defShred) },
+                postLvlMult: function () { return calcDefMult(this.charLVL2, this.enemyLVL, this.defShred) },
                 dmgInc: function () { return this.postLvlMult / this.preLvlMult },
             }
         }

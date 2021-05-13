@@ -11,6 +11,7 @@ import (
 )
 
 func main() {
+	loadComponents()
 	parseDocs()
 
 	fs := http.FileServer(http.Dir("local"))
@@ -30,7 +31,7 @@ func execRequest(handler http.Handler) http.Handler {
 		if url == "/" {
 			url = "index.html"
 		}
-		if strings.HasSuffix(url, ".html") || strings.HasSuffix(url, ".css") {
+		if strings.HasSuffix(url, ".html") || strings.HasSuffix(url, ".css")  {
 			parseDoc(url)
 		}
 		handler.ServeHTTP(w, r)
@@ -51,6 +52,21 @@ func parseDocs() {
 			if !contains(name, partialTemplates) {
 				parseDoc(name)
 			}
+		}
+	}
+}
+
+func loadComponents() {
+	files, err := ioutil.ReadDir(".")
+	if err != nil {
+		log.Panic(err)
+	}
+
+	for _, file := range files {
+		name := path.Base(file.Name())
+		if strings.HasSuffix(name, ".vue") {
+			log.Println("Loading component", name)
+			partialTemplates = append(partialTemplates, name)
 		}
 	}
 }
